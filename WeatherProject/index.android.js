@@ -4,9 +4,9 @@
  */
 'use strict';
 import React, {
-		AppRegistry,
+	AppRegistry,
 } from 'react-native';
 
-import WeatherProject from 'WeatherProject/WeatherProject'
+import WeatherProject from 'WeatherProject/src/WeatherProject';
 
 AppRegistry.registerComponent('WeatherProject', () => WeatherProject);
