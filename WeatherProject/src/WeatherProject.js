@@ -16,10 +16,7 @@ class WeatherProject extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {zip: '',
-									forecast: {
-										main: 'Clouds',
-										description: 'few clouds',
-										temp: 45.7} }
+									forecast: null};
 	}
 
 	// NOTE THIS IS OUTDATED
@@ -29,31 +26,50 @@ class WeatherProject extends Component {
 	// 				zip: ''
 	// 		}
 	// }
+  _parseResponse(json) {
+    return {
+      forecast: {
+        main: json.weather[0].main,
+        description: json.weather[0].description,
+        temp: json.main.temp
+      }
+    };
+  }
+
 	_handleTextChange(event) {
 		let zip = event.nativeEvent.text;
+    let apiKey = 'ec1ae731a4d1582087c424a5b0ed64ea';
 		this.setState({zip: zip});
-
-		let uri=`http://api.openweathermap.org/data/2.5/weather?q=${zip}&units=imperial`
-		console.log(uri);
+		let uri=`http://api.openweathermap.org/data/2.5/weather?q=${zip}&units=imperial&APPID=${apiKey}`;
+    fetch(uri)
+      .then((response => response.json()))
+      .then((responseJSON) => {
+        this.setState(this._parseResponse(responseJSON));
+      });
 	}
 
+  _renderForecast() {
+    if(this.state.forecast != null)
+      return(
+    	<Forecast
+		main={this.state.forecast.main}
+		description={this.state.forecast.description}
+		    temp={this.state.forecast.temp} />
+      );
+  }
 	render() {
-		console.log(Forecast);
 		return (
 				<View style={styles.container}>
 				<Text style={styles.welcome}>
 				You input {this.state.zip}
 			</Text>
-				<Forecast
-			main={this.state.forecast.main}
-			description={this.state.forecast.description}
-			temp={this.state.forecast.temp} />
-				<TextInput
-			style={styles.input}
-			returnKeyType='go'
-			// this is to preserve the "this"
-			onSubmitEditing={(event) => this._handleTextChange(event)} />
-			</View>
+        {this._renderForecast()}
+			  <TextInput
+		  style={styles.input}
+		  returnKeyType='go'
+		  // this is to preserve the "this"
+		  onSubmitEditing={(event) => this._handleTextChange(event)} />
+			  </View>
 		);
 	}
 }
