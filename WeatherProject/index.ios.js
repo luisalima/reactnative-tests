@@ -3,7 +3,7 @@
  * https://github.com/facebook/react-native
  */
 import React, {
-	AppRegistry,
+  AppRegistry,
 } from 'react-native';
 
 
