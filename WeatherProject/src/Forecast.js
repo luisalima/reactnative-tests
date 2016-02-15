@@ -21,12 +21,41 @@ class Forecast extends Component {
       country: 'Portugal',
       description: 'Clear',
       temperature: 21,
-      searchedCity: 'Porto'
+      searchedCity: 'Porto',
+      initialPosition: 'unknown',
+      lastPosition: 'unknown',
+      watchID: 0
     };
   }
 
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        let initialPosition = JSON.stringify(position);
+        this.setState({initialPostion});
+      },
+      (error) => console.log(error.message),
+      {
+        enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 1000
+      }
+    );
+
+    this.watchID = navigator.geolocation.watchPosition((position) => {
+      let lastPosition = JSON.stringify(position);
+      this.setState({lastPosition});
+    });
+
+    this._fetchWeather();
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+
   _fetchWeather() {
-    API.fetchWeatherByCityName(this.state.searchedCity).then((response => {
+    API.fetchWeatherByCityName(this.state.initialPosition).then((response => {
       let city = response.list[0];
 
       this.setState({
