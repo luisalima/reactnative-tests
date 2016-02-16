@@ -11,6 +11,11 @@ import React, {
 
 import API from 'WeatherProject/src/Api';
 
+// constants used for background colors
+var BG_HOT  = '#fb9f4d';
+var BG_WARM = '#fbd84d';
+var BG_COLD = '#00abe6';
+
 class Forecast extends Component {
 
   constructor(props) {
@@ -26,7 +31,8 @@ class Forecast extends Component {
         temperature: 0
       },
       country: '',
-      city: ''
+      city: '',
+      backgroundColor: '#fff'
     };
   }
 
@@ -38,6 +44,19 @@ class Forecast extends Component {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         API.fetchWeatherByGeoCoords(position.coords).then((response => {
+
+          // choose appropriate background color based on temperature
+          let temp = parseInt(response.main.temp);
+          if(temp < 14) {
+            this.setState({backgroundColor: BG_COLD});
+          }
+          else if(temp >= 14) {
+            this.setState({backgroundColor: BG_WARM});
+          }
+          else {
+            this.setState({backgroundColor: BG_HOT});
+          }
+
           this.setState({
             coords: {
               lat: response.coord.lat,
@@ -47,8 +66,8 @@ class Forecast extends Component {
               temperature: response.main.temp,
               description: response.weather[0].description
             },
-            country: response.sys.country,
-            city: response.name
+            country: response.sys.country.toUpperCase(),
+            city: response.name.toUpperCase()
           });
         }));
       },
@@ -65,7 +84,7 @@ class Forecast extends Component {
 
   render() {
     return (
-      <Animated.View style={styles.container}>
+      <Animated.View style={[styles.container, {backgroundColor: this.state.backgroundColor}]}>
         <View style={[styles.animatedContainer]}>
           <Text style={styles.temperature}>
             {Math.round(this.state.weather.temperature) + 'ºC'}
