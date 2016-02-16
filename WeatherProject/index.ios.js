@@ -17,10 +17,6 @@ class WeatherProject extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      city: 'Porto'
-    };
   }
 
   render() {
@@ -28,7 +24,7 @@ class WeatherProject extends Component {
       <NavigatorIOS
         style={styles.container}
         initialRoute={{
-          title: this.state.city,
+          title: 'Current location',
           component: ForecastScreen
         }}
       />

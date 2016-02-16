@@ -17,75 +17,63 @@ class Forecast extends Component {
     super(props);
 
     this.state = {
-      city: 'Porto',
-      country: 'Portugal',
-      description: 'Clear',
-      temperature: 21,
-      searchedCity: 'Porto',
-      initialPosition: 'unknown',
-      lastPosition: 'unknown',
-      watchID: 0
+      coords: {
+        lat: 0,
+        lon: 0
+      },
+      weather: {
+        description: '',
+        temperature: 0
+      },
+      country: '',
+      city: ''
     };
   }
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        let initialPosition = JSON.stringify(position);
-        this.setState({initialPostion});
+        API.fetchWeatherByGeoCoords(position.coords).then((response => {
+          this.setState({
+            coords: {
+              lat: response.coord.lat,
+              lon: response.coord.lon
+            },
+            weather: {
+              temperature: response.main.temp,
+              description: response.weather[0].description
+            },
+            country: response.sys.country,
+            city: response.name
+          });
+        }));
       },
-      (error) => console.log(error.message),
+      (error) => {
+        console.log(error.message)
+      },
       {
         enableHighAccuracy: true,
         timeout: 20000,
         maximumAge: 1000
       }
     );
-
-    this.watchID = navigator.geolocation.watchPosition((position) => {
-      let lastPosition = JSON.stringify(position);
-      this.setState({lastPosition});
-    });
-
-    this._fetchWeather();
-  }
-
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchID);
-  }
-
-  _fetchWeather() {
-    API.fetchWeatherByCityName(this.state.initialPosition).then((response => {
-      let city = response.list[0];
-
-      this.setState({
-        temperature: city.main.temp,
-        city: city.name,
-        country: city.sys.country,
-        description: city.weather[0].description
-      });
-    }));
   }
 
   render() {
     return (
       <Animated.View style={styles.container}>
         <View style={[styles.animatedContainer]}>
-          <Text style={styles.description}>
-            {this.state.description}
-          </Text>
-
           <Text style={styles.temperature}>
-            {Math.round(this.state.temperature) + 'ºC'}
+            {Math.round(this.state.weather.temperature) + 'ºC'}
           </Text>
 
-          <TextInput
-            style={styles.input}
-            clearButtonMode={'always'}
-            clearTextOnFocus={true}
-            returnKeyType={'search'}
-            onChangeText={(text) => this.setState({searchedCity: text})}
-            onSubmitEditing={() => this._fetchWeather()}/>
+          <Text style={styles.location}>
+            {this.state.city + ', ' + this.state.country}
+          </Text>
+
+          <Text style={styles.description}>
+            {this.state.weather.description}
+          </Text>
         </View>
       </Animated.View>
     );
@@ -103,27 +91,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   temperature: {
-    fontSize: 90,
+    fontSize: 70,
     fontWeight: '100',
     margin: 0
   },
   location: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '100',
     marginBottom: 20,
   },
   description: {
     fontSize: 34,
     fontWeight: '500'
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#666',
-    height: 40,
-    marginVertical: 20,
-    marginHorizontal: 20,
-    paddingHorizontal: 10,
-    borderRadius: 5
   }
 });
 
