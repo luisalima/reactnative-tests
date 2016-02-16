@@ -5,7 +5,6 @@ import React, {
   Component,
   StyleSheet,
   Text,
-  TextInput,
   View
 } from 'react-native';
 
