@@ -30,6 +30,10 @@ class Forecast extends Component {
     };
   }
 
+  /**
+   * When this component mount, seach the weather for the user's current
+   * location.
+   */
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
