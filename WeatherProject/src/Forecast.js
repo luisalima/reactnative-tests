@@ -45,18 +45,6 @@ class Forecast extends Component {
       (position) => {
         API.fetchWeatherByGeoCoords(position.coords).then((response => {
 
-          // choose appropriate background color based on temperature
-          let temp = parseInt(response.main.temp);
-          if(temp < 14) {
-            this.setState({backgroundColor: BG_COLD});
-          }
-          else if(temp >= 14) {
-            this.setState({backgroundColor: BG_WARM});
-          }
-          else {
-            this.setState({backgroundColor: BG_HOT});
-          }
-
           this.setState({
             coords: {
               lat: response.coord.lat,
@@ -67,7 +55,8 @@ class Forecast extends Component {
               description: response.weather[0].description
             },
             country: response.sys.country.toUpperCase(),
-            city: response.name.toUpperCase()
+            city: response.name.toUpperCase(),
+            backgroundColor: this._chooseBackgroundColor(parseInt(response.main.temp))
           });
         }));
       },
@@ -80,6 +69,25 @@ class Forecast extends Component {
         maximumAge: 1000
       }
     );
+  }
+
+  /**
+    * Choose appropriate background color based on temperature.
+    */
+  _chooseBackgroundColor(temp) {
+
+    let bg;
+    if(temp < 14) {
+      bg = BG_COLD;
+    }
+    else if(temp >= 14) {
+      bg = BG_WARM;
+    }
+    else {
+      bg = BG_HOT;
+    }
+
+    return bg;
   }
 
   render() {
