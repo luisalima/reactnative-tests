@@ -6,8 +6,22 @@
 
 import React, {
   AppRegistry,
+  Component,
 } from 'react-native';
 
-import WeatherProject from 'WeatherProject/src/Forecast';
+import ForecastScreen from 'WeatherProject/src/Forecast';
+
+class WeatherProject extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <ForecastScreen />
+    );
+  }
+}
 
 AppRegistry.registerComponent('WeatherProject', () => WeatherProject);
