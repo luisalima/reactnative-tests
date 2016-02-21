@@ -4,6 +4,7 @@ import React, {
   AppRegistry,
   Component,
   StyleSheet,
+  TabBarIOS,
   Text,
   View
 } from 'react-native';
@@ -13,9 +14,9 @@ import ForecastView from 'WeatherProject/src/ForecastView';
 import LoadingView  from 'WeatherProject/src/LoadingView';
 
 // constants used for background colors
-var BG_HOT  = '#fb9f4d';
-var BG_WARM = '#fbd84d';
-var BG_COLD = '#00abe6';
+let BG_HOT  = '#fb9f4d';
+let BG_WARM = '#fbd84d';
+let BG_COLD = '#00abe6';
 
 class WeatherProject extends Component {
 
@@ -24,7 +25,8 @@ class WeatherProject extends Component {
 
     this.state = {
       weatherData: null,
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
+      selectedTab: 'forecast'
     };
   }
 
@@ -74,8 +76,11 @@ class WeatherProject extends Component {
     return bg;
   }
 
-  render() {
-
+  /**
+   * If this.state.weatherData is undifined, renders a LoadingView; otherwise,
+   * this method renders the ForecastScreen.
+   */
+  _renderForecastView() {
     if(!this.state.weatherData) {
       return (
         <LoadingView />
@@ -88,9 +93,28 @@ class WeatherProject extends Component {
           description={this.state.weatherData.weather[0].description}
           city={this.state.weatherData.name}
           country={this.state.weatherData.sys.country}
-          temperature={this.state.weatherData.main.temp}
-        />
+          temperature={this.state.weatherData.main.temp} />
       </View>
+    );
+  }
+
+  render() {
+    return (
+      <TabBarIOS
+        tintColor='white'
+        translucent={true}>
+        <TabBarIOS.Item
+          title='Forecast'
+          systemIcon='recents'
+          selected={this.state.selectedTab === 'forecast'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'forecast',
+            });
+          }}>
+          {this._renderForecastView()}
+        </TabBarIOS.Item>
+      </TabBarIOS>
     );
   }
 }
