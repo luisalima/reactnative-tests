@@ -11,6 +11,7 @@ import React, {
 
 import API          from 'WeatherProject/src/Api';
 import ForecastView from 'WeatherProject/src/ForecastView';
+import Icon         from 'react-native-vector-icons/FontAwesome';
 import LoadingView  from 'WeatherProject/src/LoadingView';
 
 // constants used for background colors
@@ -103,9 +104,9 @@ class WeatherProject extends Component {
       <TabBarIOS
         tintColor='white'
         translucent={true}>
-        <TabBarIOS.Item
-          title='Forecast'
-          systemIcon='recents'
+        <Icon.TabBarItem
+          title=''
+          iconName='location-arrow'
           selected={this.state.selectedTab === 'forecast'}
           onPress={() => {
             this.setState({
@@ -113,7 +114,7 @@ class WeatherProject extends Component {
             });
           }}>
           {this._renderForecastView()}
-        </TabBarIOS.Item>
+        </Icon.TabBarItem>
       </TabBarIOS>
     );
   }
