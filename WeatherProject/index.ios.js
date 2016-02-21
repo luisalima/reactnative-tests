@@ -126,6 +126,12 @@ class WeatherProject extends Component {
     );
   }
 
+  _renderSearchView() {
+    return (
+      <SearchView />
+    );
+  }
+
   render() {
     return (
       <TabBarIOS
@@ -152,6 +158,17 @@ class WeatherProject extends Component {
             });
           }}>
           {this._renderForecastView()}
+        </Icon.TabBarItem>
+        <Icon.TabBarItem
+          title=''
+          iconName='list-ul'
+          selected={this.state.selectedTab === 'search'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'search',
+            });
+          }}>
+          {this._renderSearchView()}
         </Icon.TabBarItem>
       </TabBarIOS>
     );
