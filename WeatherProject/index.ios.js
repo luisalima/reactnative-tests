@@ -2,6 +2,7 @@
 
 import React, {
   AppRegistry,
+  AsyncStorage,
   Component,
   StyleSheet,
   TabBarIOS,
@@ -13,11 +14,15 @@ import API          from 'WeatherProject/src/Api';
 import ForecastView from 'WeatherProject/src/ForecastView';
 import Icon         from 'react-native-vector-icons/FontAwesome';
 import LoadingView  from 'WeatherProject/src/LoadingView';
+import SearchView   from 'WeatherProject/src/SearchView';
+import SettingsView from 'WeatherProject/src/SettingsView';
 
 // constants used for background colors
 let BG_HOT  = '#fb9f4d';
 let BG_WARM = '#fbd84d';
 let BG_COLD = '#00abe6';
+
+let STORAGE_KEY  = '@SettingsAsyncStorage:units';
 
 class WeatherProject extends Component {
 
@@ -25,10 +30,23 @@ class WeatherProject extends Component {
     super(props);
 
     this.state = {
-      weatherData: null,
       backgroundColor: '#fff',
-      selectedTab: 'forecast'
+      selectedTab: 'forecast',
+      unitsFormat: 'metric',
+      weatherData: null,
     };
+  }
+
+  async _loadSelectedUnitsFormat() {
+    try {
+      let selectedFormat = await AsyncStorage.getItem(STORAGE_KEY);
+      if (selectedFormat !== null) {
+        this.setState({ unitsFormat: selectedFormat });
+      }
+    }
+    catch (error) {
+      console.log(error.message);
+    }
   }
 
   /**
@@ -38,14 +56,17 @@ class WeatherProject extends Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        API.fetchWeatherByGeoCoords(position.coords).then((response => {
-          console.log(response);
 
-          this.setState({
-            weatherData: response,
-            backgroundColor: this._chooseBackgroundColor(parseInt(response.main.temp))
-          });
-        }));
+        // Start by loading the selected units format and only after that fetch
+        // the weather, providing the `position` and the selected units format.
+        this._loadSelectedUnitsFormat().done(() => (
+          API.fetchWeatherByGeoCoords(position.coords, this.state.unitsFormat).then((response => {
+            this.setState({
+              backgroundColor: this._chooseBackgroundColor(parseInt(response.main.temp)),
+              weatherData: response
+            });
+          }))
+        ));
       },
       (error) => {
         console.log(error.message)
@@ -77,6 +98,12 @@ class WeatherProject extends Component {
     return bg;
   }
 
+  _renderSettingsView() {
+    return (
+      <SettingsView />
+    );
+  }
+
   /**
    * If this.state.weatherData is undifined, renders a LoadingView; otherwise,
    * this method renders the ForecastScreen.
@@ -104,6 +131,17 @@ class WeatherProject extends Component {
       <TabBarIOS
         tintColor='white'
         translucent={true}>
+        <Icon.TabBarItem
+          title=''
+          iconName='cog'
+          selected={this.state.selectedTab === 'settings'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'settings',
+            });
+          }}>
+          {this._renderSettingsView()}
+        </Icon.TabBarItem>
         <Icon.TabBarItem
           title=''
           iconName='location-arrow'
