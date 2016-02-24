@@ -82,25 +82,18 @@ const styles = StyleSheet.create({
   },
   section: {
     alignItems: 'center',
-    borderBottomColor: 'white',
-    borderBottomWidth: 0.75,
-    borderStyle: 'solid',
     justifyContent: 'center',
-    padding: 5,
   },
   text: {
-    color: '#fff',
     fontSize: 25,
     fontWeight: '400'
   },
   location: {
-    color: '#fff',
     fontSize: 50,
     fontWeight: '400',
     marginBottom: 5
   },
   temperature: {
-    color: '#fff',
     fontSize: 110,
     fontWeight: '200',
     marginTop: 10

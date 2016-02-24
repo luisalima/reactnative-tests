@@ -17,11 +17,6 @@ import LoadingView  from 'WeatherProject/src/LoadingView';
 import SearchView   from 'WeatherProject/src/SearchView';
 import SettingsView from 'WeatherProject/src/SettingsView';
 
-// constants used for background colors
-let BG_HOT  = '#fb9f4d';
-let BG_WARM = '#fbd84d';
-let BG_COLD = '#00abe6';
-
 let STORAGE_KEY  = '@SettingsAsyncStorage:units';
 
 class WeatherProject extends Component {
@@ -30,7 +25,6 @@ class WeatherProject extends Component {
     super(props);
 
     this.state = {
-      backgroundColor: '#fff',
       selectedTab: 'forecast',
       unitsFormat: 'metric',
       weatherData: null,
@@ -61,10 +55,7 @@ class WeatherProject extends Component {
         // the weather, providing the `position` and the selected units format.
         this._loadSelectedUnitsFormat().done(() => (
           API.fetchWeatherByGeoCoords(position.coords, this.state.unitsFormat).then((response => {
-            this.setState({
-              backgroundColor: this._chooseBackgroundColor(parseInt(response.main.temp)),
-              weatherData: response
-            });
+            this.setState({ weatherData: response });
           }))
         ));
       },
@@ -77,25 +68,6 @@ class WeatherProject extends Component {
         maximumAge: 1000
       }
     );
-  }
-
-  /**
-    * Choose appropriate background color based on temperature.
-    */
-  _chooseBackgroundColor(temp) {
-
-    let bg;
-    if(temp < 14) {
-      bg = BG_COLD;
-    }
-    else if(temp >= 14) {
-      bg = BG_WARM;
-    }
-    else {
-      bg = BG_HOT;
-    }
-
-    return bg;
   }
 
   _renderSettingsView() {
@@ -116,7 +88,7 @@ class WeatherProject extends Component {
     }
 
     return (
-      <View style={[styles.container, {backgroundColor: this.state.backgroundColor}]}>
+      <View style={[styles.container]}>
         <ForecastView
           units={this.state.unitsFormat}
           weatherData={this.state.weatherData} />
@@ -176,6 +148,7 @@ class WeatherProject extends Component {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'stretch',
+    backgroundColor: 'whitesmoke',
     flex: 1,
     justifyContent: 'flex-start'
   },
