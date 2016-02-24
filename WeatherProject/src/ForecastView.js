@@ -7,26 +7,70 @@ import React, {
   View
 } from 'react-native';
 
+import Units from 'WeatherProject/data/units.json';
+import Utils from 'WeatherProject/src/Utils';
+
 class Forecast extends Component {
 
   constructor(props) {
     super(props);
   }
 
-  render() {
+  _renderBasicWeatherData() {
     return (
-      <View style={[styles.container]}>
+      <View style={[styles.section]}>
         <Text style={styles.location}>
-          {this.props.city + ', ' + this.props.country}
+          {this.props.weatherData.name + ', ' + this.props.weatherData.sys.country}
         </Text>
 
-        <Text style={styles.description}>
-          {this.props.description}
+        <Text style={styles.text}>
+          {this.props.weatherData.weather[0].description}
         </Text>
 
         <Text style={styles.temperature}>
-          {Math.round(this.props.temperature) + 'º'}
+          {Math.round(this.props.weatherData.main.temp) + 'º'}
         </Text>
+      </View>
+    );
+  }
+
+  _renderWeatherDetails() {
+    return (
+      <View style={[styles.section]}>
+        <Text style={styles.text}>
+          {`Sunrise: ${Utils.formatTime(this.props.weatherData.sys.sunrise)}`}
+        </Text>
+
+        <Text style={styles.text}>
+          {`Sunset: ${Utils.formatTime(this.props.weatherData.sys.sunset)}`}
+        </Text>
+
+        <Text style={styles.text}>
+          {'Wind: ' +
+            Utils.convertDegToCompass(this.props.weatherData.wind.deg) +
+            ' ' +
+            this.props.weatherData.wind.speed +
+            ' ' +
+            Units.speed[this.props.units]
+          }
+        </Text>
+
+        <Text style={styles.text}>
+          {'Pressure: ' +
+            Math.round(this.props.weatherData.main.pressure) +
+            ' ' +
+            Units.pressure
+          }
+        </Text>
+      </View>
+    );
+  }
+
+  render() {
+    return (
+      <View style={[styles.container]}>
+        {this._renderBasicWeatherData()}
+        {this._renderWeatherDetails()}
       </View>
     );
   }
@@ -34,13 +78,19 @@ class Forecast extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 60
+    marginTop: 60,
   },
-  description: {
+  section: {
+    alignItems: 'center',
+    borderBottomColor: 'white',
+    borderBottomWidth: 0.75,
+    borderStyle: 'solid',
+    justifyContent: 'center',
+    padding: 5,
+  },
+  text: {
     color: '#fff',
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: '400'
   },
   location: {
