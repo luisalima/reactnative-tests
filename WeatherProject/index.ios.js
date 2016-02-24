@@ -118,10 +118,8 @@ class WeatherProject extends Component {
     return (
       <View style={[styles.container, {backgroundColor: this.state.backgroundColor}]}>
         <ForecastView
-          description={this.state.weatherData.weather[0].description}
-          city={this.state.weatherData.name}
-          country={this.state.weatherData.sys.country}
-          temperature={this.state.weatherData.main.temp} />
+          units={this.state.unitsFormat}
+          weatherData={this.state.weatherData} />
       </View>
     );
   }
