@@ -50,7 +50,16 @@ class Forecast extends Component {
             Utils.convertDegToCompass(this.props.weatherData.wind.deg) +
             ' ' +
             this.props.weatherData.wind.speed +
+            ' ' +
             Units.speed[this.props.units]
+          }
+        </Text>
+
+        <Text style={styles.text}>
+          {'Pressure: ' +
+            Math.round(this.props.weatherData.main.pressure) +
+            ' ' +
+            Units.pressure
           }
         </Text>
       </View>

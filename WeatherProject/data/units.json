@@ -1,4 +1,5 @@
 {
+  "pressure": "hPa",
   "speed": {
     "metric": "m/s",
     "imperial": "mph"
