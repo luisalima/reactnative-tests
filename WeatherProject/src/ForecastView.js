@@ -64,6 +64,10 @@ class Forecast extends Component {
         </Text>
 
         <Text style={styles.text}>
+          {`Humidity: ${this.props.weatherData.main.humidity + ' %'}`}
+        </Text>
+
+        <Text style={styles.text}>
           {'Pressure: ' +
             Math.round(this.props.weatherData.main.pressure) +
             ' ' +
@@ -104,7 +108,7 @@ const styles = StyleSheet.create({
   temperature: {
     fontSize: 110,
     fontWeight: '200',
-    marginTop: 10
+    marginTop: 7
   },
   icon: {
     fontFamily: 'WeatherIcons-Regular',
