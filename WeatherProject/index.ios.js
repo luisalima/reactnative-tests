@@ -105,7 +105,7 @@ class WeatherProject extends Component {
   render() {
     return (
       <TabBarIOS
-        tintColor='white'
+        tintColor='black'
         translucent={true}>
         <Icon.TabBarItem
           title=''
