@@ -19,3 +19,8 @@ for a step by step guide.
 
 * [Platform-specific code](http://facebook.github.io/react-native/docs/platform-specific-code.html#content)
 * Inspired by [facebook/flux](https://github.com/facebook/flux)
+
+# Interesting stuff
+
+* [Demonstrating CSS3
+    Flexbox](http://blog.krawaller.se/posts/a-react-app-demonstrating-css3-flexbox/)
