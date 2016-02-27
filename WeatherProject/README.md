@@ -7,6 +7,12 @@
 3. Go to the `Simulator` and under `Debug > Location` select `Apple`
 4. <kbd>cmd</kbd> + <kbd>r</kbd>
 
+# 3rd party assets and tools used
+
+* [Open Weather API](http://openweathermap.org/api)
+* [React Native Icons](https://github.com/corymsmith/react-native-icons)
+* [Weather Icons](https://erikflowers.github.io/weather-icons/)
+
 # Add custom fonts
 
 ## iOS
