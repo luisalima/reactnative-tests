@@ -12,6 +12,8 @@ import CompassUtils from 'WeatherProject/app/utils/CompassUtils';
 import TimeUtils    from 'WeatherProject/app/utils/TimeUtils';
 import WeatherIcon  from 'WeatherProject/app/utils/WeatherIconUtils';
 
+import * as typographyStyles from 'WeatherProject/app/styles/typography';
+
 class CurrentWeatherView extends Component {
 
   constructor(props) {
@@ -32,7 +34,7 @@ class CurrentWeatherView extends Component {
           {this.props.weatherData.weather[0].description}
         </Text>
 
-        <Text style={styles.icon}>
+        <Text style={typographyStyles.weatherIcon}>
           {WeatherIcon(this.props.weatherData.weather[0].icon)}
         </Text>
 

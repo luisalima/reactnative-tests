@@ -16,7 +16,8 @@ import Icon               from 'react-native-vector-icons/FontAwesome';
 import LoadingView        from 'WeatherProject/app/components/LoadingView';
 import SearchView         from 'WeatherProject/app/components/SearchView';
 import SettingsView       from 'WeatherProject/app/components/SettingsView';
-import styles             from 'WeatherProject/app/styles/app';
+
+import layoutStyles             from 'WeatherProject/app/styles/layout';
 
 const STORAGE_KEY  = '@SettingsAsyncStorage:units';
 
@@ -89,7 +90,7 @@ class WeatherProject extends Component {
     }
 
     return (
-      <View style={styles.container}>
+      <View style={layoutStyles.container}>
         <CurrentWeatherView
           units={this.state.unitsFormat}
           weatherData={this.state.weatherData} />
