@@ -14,3 +14,8 @@
 See (this
 article)[https://medium.com/@dabit3/adding-custom-fonts-to-react-native-b266b41bff7f#.o747g21ym]
 for a step by step guide.
+
+# Directory structure
+
+* http://facebook.github.io/react-native/docs/platform-specific-code.html#content
+* Inspired by https://github.com/facebook/flux
