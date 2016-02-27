@@ -1,4 +1,4 @@
-# Run
+# How to run the app?
 
 ## iOS
 
@@ -13,14 +13,6 @@
 * [React Native Icons](https://github.com/corymsmith/react-native-icons)
 * [Weather Icons](https://erikflowers.github.io/weather-icons/)
 
-# Add custom fonts
-
-## iOS
-
-See [this
-article](https://medium.com/@dabit3/adding-custom-fonts-to-react-native-b266b41bff7f#.o747g21ym)
-for a step by step guide.
-
 # Directory structure
 
 * [Platform-specific code](http://facebook.github.io/react-native/docs/platform-specific-code.html#content)
@@ -28,5 +20,7 @@ for a step by step guide.
 
 # Interesting stuff
 
+* [Adding custom fonts for
+  iOS](https://medium.com/@dabit3/adding-custom-fonts-to-react-native-b266b41bff7f#.o747g21ym)
 * [Demonstrating CSS3
     Flexbox](http://blog.krawaller.se/posts/a-react-app-demonstrating-css3-flexbox/)
