@@ -24,3 +24,4 @@
   iOS](https://medium.com/@dabit3/adding-custom-fonts-to-react-native-b266b41bff7f#.o747g21ym)
 * [Demonstrating CSS3
     Flexbox](http://blog.krawaller.se/posts/a-react-app-demonstrating-css3-flexbox/)
+* [ECMAScript 6 modules](http://exploringjs.com/es6/ch_modules.html)
