@@ -10,12 +10,12 @@ import React, {
   View
 } from 'react-native';
 
-import API          from 'WeatherProject/src/Api';
-import ForecastView from 'WeatherProject/src/ForecastView';
-import Icon         from 'react-native-vector-icons/FontAwesome';
-import LoadingView  from 'WeatherProject/src/LoadingView';
-import SearchView   from 'WeatherProject/src/SearchView';
-import SettingsView from 'WeatherProject/src/SettingsView';
+import API                from 'WeatherProject/src/Api';
+import CurrentWeatherView from 'WeatherProject/src/CurrentWeatherView';
+import Icon               from 'react-native-vector-icons/FontAwesome';
+import LoadingView        from 'WeatherProject/src/LoadingView';
+import SearchView         from 'WeatherProject/src/SearchView';
+import SettingsView       from 'WeatherProject/src/SettingsView';
 
 let STORAGE_KEY  = '@SettingsAsyncStorage:units';
 
@@ -80,7 +80,7 @@ class WeatherProject extends Component {
    * If this.state.weatherData is undifined, renders a LoadingView; otherwise,
    * this method renders the ForecastScreen.
    */
-  _renderForecastView() {
+  _renderCurrentWeatherView() {
     if(!this.state.weatherData) {
       return (
         <LoadingView />
@@ -89,7 +89,7 @@ class WeatherProject extends Component {
 
     return (
       <View style={[styles.container]}>
-        <ForecastView
+        <CurrentWeatherView
           units={this.state.unitsFormat}
           weatherData={this.state.weatherData} />
       </View>
@@ -127,7 +127,7 @@ class WeatherProject extends Component {
               selectedTab: 'forecast',
             });
           }}>
-          {this._renderForecastView()}
+          {this._renderCurrentWeatherView()}
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title=''

@@ -11,7 +11,7 @@ import Units       from 'WeatherProject/data/units.json';
 import Utils       from 'WeatherProject/src/Utils';
 import WeatherIcon from 'WeatherProject/src/WeatherIcons';
 
-class Forecast extends Component {
+class CurrentWeatherView extends Component {
 
   constructor(props) {
     super(props);
@@ -117,5 +117,4 @@ const styles = StyleSheet.create({
   }
 });
 
-// IMPORTANT it seems like this can be the only export of the module. Try putting {} around Forecast...
-module.exports = Forecast;
+module.exports = CurrentWeatherView;
