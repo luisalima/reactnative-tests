@@ -7,24 +7,32 @@ import React, {
   View
 } from 'react-native';
 
-import Units from 'WeatherProject/data/units.json';
-import Utils from 'WeatherProject/src/Utils';
+import Units       from 'WeatherProject/data/units.json';
+import Utils       from 'WeatherProject/src/Utils';
+import WeatherIcon from 'WeatherProject/src/WeatherIcons';
 
-class Forecast extends Component {
+class CurrentWeatherView extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      icon: WeatherIcon()
+    };
   }
 
   _renderBasicWeatherData() {
     return (
-      <View style={[styles.section]}>
+      <View style={styles.section}>
         <Text style={styles.location}>
           {this.props.weatherData.name + ', ' + this.props.weatherData.sys.country}
         </Text>
 
         <Text style={styles.text}>
           {this.props.weatherData.weather[0].description}
+        </Text>
+
+        <Text style={styles.icon}>
+          {WeatherIcon(this.props.weatherData.weather[0].icon)}
         </Text>
 
         <Text style={styles.temperature}>
@@ -36,7 +44,7 @@ class Forecast extends Component {
 
   _renderWeatherDetails() {
     return (
-      <View style={[styles.section]}>
+      <View style={styles.section}>
         <Text style={styles.text}>
           {`Sunrise: ${Utils.formatTime(this.props.weatherData.sys.sunrise)}`}
         </Text>
@@ -53,6 +61,10 @@ class Forecast extends Component {
             ' ' +
             Units.speed[this.props.units]
           }
+        </Text>
+
+        <Text style={styles.text}>
+          {`Humidity: ${this.props.weatherData.main.humidity + ' %'}`}
         </Text>
 
         <Text style={styles.text}>
@@ -82,30 +94,27 @@ const styles = StyleSheet.create({
   },
   section: {
     alignItems: 'center',
-    borderBottomColor: 'white',
-    borderBottomWidth: 0.75,
-    borderStyle: 'solid',
     justifyContent: 'center',
-    padding: 5,
   },
   text: {
-    color: '#fff',
     fontSize: 25,
     fontWeight: '400'
   },
   location: {
-    color: '#fff',
     fontSize: 50,
     fontWeight: '400',
     marginBottom: 5
   },
   temperature: {
-    color: '#fff',
     fontSize: 110,
     fontWeight: '200',
-    marginTop: 10
+    marginTop: 7
   },
+  icon: {
+    fontFamily: 'WeatherIcons-Regular',
+    fontSize: 130,
+    padding: 0
+  }
 });
 
-// IMPORTANT it seems like this can be the only export of the module. Try putting {} around Forecast...
-module.exports = Forecast;
+module.exports = CurrentWeatherView;

@@ -10,17 +10,12 @@ import React, {
   View
 } from 'react-native';
 
-import API          from 'WeatherProject/src/Api';
-import ForecastView from 'WeatherProject/src/ForecastView';
-import Icon         from 'react-native-vector-icons/FontAwesome';
-import LoadingView  from 'WeatherProject/src/LoadingView';
-import SearchView   from 'WeatherProject/src/SearchView';
-import SettingsView from 'WeatherProject/src/SettingsView';
-
-// constants used for background colors
-let BG_HOT  = '#fb9f4d';
-let BG_WARM = '#fbd84d';
-let BG_COLD = '#00abe6';
+import API                from 'WeatherProject/src/Api';
+import CurrentWeatherView from 'WeatherProject/src/CurrentWeatherView';
+import Icon               from 'react-native-vector-icons/FontAwesome';
+import LoadingView        from 'WeatherProject/src/LoadingView';
+import SearchView         from 'WeatherProject/src/SearchView';
+import SettingsView       from 'WeatherProject/src/SettingsView';
 
 let STORAGE_KEY  = '@SettingsAsyncStorage:units';
 
@@ -30,7 +25,6 @@ class WeatherProject extends Component {
     super(props);
 
     this.state = {
-      backgroundColor: '#fff',
       selectedTab: 'forecast',
       unitsFormat: 'metric',
       weatherData: null,
@@ -61,10 +55,7 @@ class WeatherProject extends Component {
         // the weather, providing the `position` and the selected units format.
         this._loadSelectedUnitsFormat().done(() => (
           API.fetchWeatherByGeoCoords(position.coords, this.state.unitsFormat).then((response => {
-            this.setState({
-              backgroundColor: this._chooseBackgroundColor(parseInt(response.main.temp)),
-              weatherData: response
-            });
+            this.setState({ weatherData: response });
           }))
         ));
       },
@@ -79,25 +70,6 @@ class WeatherProject extends Component {
     );
   }
 
-  /**
-    * Choose appropriate background color based on temperature.
-    */
-  _chooseBackgroundColor(temp) {
-
-    let bg;
-    if(temp < 14) {
-      bg = BG_COLD;
-    }
-    else if(temp >= 14) {
-      bg = BG_WARM;
-    }
-    else {
-      bg = BG_HOT;
-    }
-
-    return bg;
-  }
-
   _renderSettingsView() {
     return (
       <SettingsView />
@@ -108,7 +80,7 @@ class WeatherProject extends Component {
    * If this.state.weatherData is undifined, renders a LoadingView; otherwise,
    * this method renders the ForecastScreen.
    */
-  _renderForecastView() {
+  _renderCurrentWeatherView() {
     if(!this.state.weatherData) {
       return (
         <LoadingView />
@@ -116,8 +88,8 @@ class WeatherProject extends Component {
     }
 
     return (
-      <View style={[styles.container, {backgroundColor: this.state.backgroundColor}]}>
-        <ForecastView
+      <View style={[styles.container]}>
+        <CurrentWeatherView
           units={this.state.unitsFormat}
           weatherData={this.state.weatherData} />
       </View>
@@ -133,7 +105,7 @@ class WeatherProject extends Component {
   render() {
     return (
       <TabBarIOS
-        tintColor='white'
+        tintColor='black'
         translucent={true}>
         <Icon.TabBarItem
           title=''
@@ -155,7 +127,7 @@ class WeatherProject extends Component {
               selectedTab: 'forecast',
             });
           }}>
-          {this._renderForecastView()}
+          {this._renderCurrentWeatherView()}
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title=''
@@ -176,6 +148,7 @@ class WeatherProject extends Component {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'stretch',
+    backgroundColor: 'whitesmoke',
     flex: 1,
     justifyContent: 'flex-start'
   },
