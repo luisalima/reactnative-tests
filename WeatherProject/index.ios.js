@@ -10,14 +10,14 @@ import React, {
   View
 } from 'react-native';
 
-import API                from 'WeatherProject/src/Api';
-import CurrentWeatherView from 'WeatherProject/src/CurrentWeatherView';
+import WeatherAPI         from 'WeatherProject/app/utils/WeatherAPIUtils';
+import CurrentWeatherView from 'WeatherProject/app/components/CurrentWeatherView';
 import Icon               from 'react-native-vector-icons/FontAwesome';
-import LoadingView        from 'WeatherProject/src/LoadingView';
-import SearchView         from 'WeatherProject/src/SearchView';
-import SettingsView       from 'WeatherProject/src/SettingsView';
+import LoadingView        from 'WeatherProject/app/components/LoadingView';
+import SearchView         from 'WeatherProject/app/components/SearchView';
+import SettingsView       from 'WeatherProject/app/components/SettingsView';
 
-let STORAGE_KEY  = '@SettingsAsyncStorage:units';
+const STORAGE_KEY  = '@SettingsAsyncStorage:units';
 
 class WeatherProject extends Component {
 
@@ -54,7 +54,7 @@ class WeatherProject extends Component {
         // Start by loading the selected units format and only after that fetch
         // the weather, providing the `position` and the selected units format.
         this._loadSelectedUnitsFormat().done(() => (
-          API.fetchWeatherByGeoCoords(position.coords, this.state.unitsFormat).then((response => {
+          WeatherAPI.fetchByGeographicCoords(position.coords, this.state.unitsFormat).then((response => {
             this.setState({ weatherData: response });
           }))
         ));

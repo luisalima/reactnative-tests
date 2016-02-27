@@ -7,9 +7,10 @@ import React, {
   View
 } from 'react-native';
 
-import Units       from 'WeatherProject/data/units.json';
-import Utils       from 'WeatherProject/src/Utils';
-import WeatherIcon from 'WeatherProject/src/WeatherIcons';
+import Units        from 'WeatherProject/app/constants/units.json';
+import CompassUtils from 'WeatherProject/app/utils/CompassUtils';
+import TimeUtils    from 'WeatherProject/app/utils/TimeUtils';
+import WeatherIcon  from 'WeatherProject/app/utils/WeatherIconUtils';
 
 class CurrentWeatherView extends Component {
 
@@ -46,16 +47,16 @@ class CurrentWeatherView extends Component {
     return (
       <View style={styles.section}>
         <Text style={styles.text}>
-          {`Sunrise: ${Utils.formatTime(this.props.weatherData.sys.sunrise)}`}
+          {`Sunrise: ${TimeUtils.formatTime(this.props.weatherData.sys.sunrise)}`}
         </Text>
 
         <Text style={styles.text}>
-          {`Sunset: ${Utils.formatTime(this.props.weatherData.sys.sunset)}`}
+          {`Sunset: ${TimeUtils.formatTime(this.props.weatherData.sys.sunset)}`}
         </Text>
 
         <Text style={styles.text}>
           {'Wind: ' +
-            Utils.convertDegToCompass(this.props.weatherData.wind.deg) +
+            CompassUtils.convertDegToCompass(this.props.weatherData.wind.deg) +
             ' ' +
             this.props.weatherData.wind.speed +
             ' ' +
