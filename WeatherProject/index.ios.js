@@ -17,7 +17,7 @@ import LoadingView        from 'WeatherProject/app/components/LoadingView';
 import SearchView         from 'WeatherProject/app/components/SearchView';
 import SettingsView       from 'WeatherProject/app/components/SettingsView';
 
-import layoutStyles             from 'WeatherProject/app/styles/layout';
+import layoutStyles from 'WeatherProject/app/styles/layout';
 
 const STORAGE_KEY  = '@SettingsAsyncStorage:units';
 
