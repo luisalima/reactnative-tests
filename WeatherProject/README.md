@@ -7,6 +7,11 @@
 3. Go to the `Simulator` and under `Debug > Location` select `Apple`
 4. <kbd>cmd</kbd> + <kbd>r</kbd>
 
+# Maintain consistent coding styles between different editors and IDEs
+
+Please visit http://editorconfig.org/ and download this plugin for your editor
+of choice.
+
 # 3rd party assets and tools used
 
 * [Open Weather API](http://openweathermap.org/api)
