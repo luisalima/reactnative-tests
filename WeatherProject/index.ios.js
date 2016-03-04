@@ -62,7 +62,7 @@ class WeatherProject extends Component {
         ));
       },
       (error) => {
-        console.log(error.message)
+        console.log(error.message);
       },
       {
         enableHighAccuracy: true,
